@@ -1,0 +1,32 @@
+---
+layout: default
+title: BookMarks
+---
+
+<h1> bookmarks </h1>
+<h2> work </h2>
+<ul>
+  {% for bookmark in site.data.bookmarks.work %}
+  <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
+  {% endfor %}
+</ul>
+<h2> social </h2>
+<ul>
+  {% for bookmark in site.data.bookmarks.social %}
+  <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
+  {% endfor %}
+</ul>
+<h2> blogs </h2>
+<ul>
+  {% for bookmark in site.data.bookmarks.blogs %}
+  <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
+  {% endfor %}
+</ul>
+<h2> other </h2>
+<ul>
+  {% for bookmark in site.data.bookmarks.other %}
+  <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
+  {% endfor %}
+</ul>
+
+  

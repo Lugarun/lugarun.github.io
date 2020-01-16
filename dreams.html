@@ -1,0 +1,16 @@
+---
+layout: default
+title: Dreams
+---
+<h1> dreams </h1>
+
+A list of computer/math related things I want to do.
+
+<ul>
+  {% for dream in site.data.dreams %}
+  <li>
+    <h2>{{ dream.name | downcase }}</h2>
+    <p>{{ dream.idea }}</p>
+  </li>
+  {% endfor %}
+</ul>
