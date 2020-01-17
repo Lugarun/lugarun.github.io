@@ -1,0 +1,16 @@
+---
+layout: default
+title: Project ideas
+---
+<h1> project ideas </h1>
+
+A list of computer/math related things I want to do.
+
+<ul>
+  {% for idea in site.data.projectideas %}
+  <li>
+    <h2>{{ idea.name | downcase }}</h2>
+    <p>{{ idea.idea }}</p>
+  </li>
+  {% endfor %}
+</ul>

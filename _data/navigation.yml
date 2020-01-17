@@ -2,11 +2,11 @@
   link: /
 - name: blog
   link: /blog.html
+- name: bookmarks
+  link: /bookmarks.html
+- name: project ideas
+  link: /projectideas.html
 - name: resume
   link: /assets/pdfs/resume.pdf
 - name: github
   link: https://github.com/Lugarun
-- name: bookmarks
-  link: /bookmarks.html
-- name: dreams
-  link: /dreams.html

@@ -1,0 +1,17 @@
+---
+layout: default
+title: cool links
+---
+<h1> cool links </h1>
+
+Theses are some links that I think are cool that I have acumulated.
+They are in no particular order and vary from Pure Math blogs to terminal colour scheme tools.
+
+<ul>
+  {% for link in site.data.coollinks %}
+  <li>
+    <a class="bookmark" href="{{ link.url }}"> {{ link.name }} </a>
+    {{ link.description }}
+  </li>
+  {% endfor %}
+</ul>

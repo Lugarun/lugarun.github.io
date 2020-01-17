@@ -1,0 +1,32 @@
+- name: math3ma
+  url: https://math3ma.com
+  description: Math blog by Tai-Danae Bradley.
+  category: Math/Pure Math
+- name: distill
+  url: https://distill.pub/
+  description: Web based paper publisher.
+  category: Math/Machine Learning
+- name: setosa
+  url: http://setosa.io/#/
+  description: Visual blog that is currently inactive.
+  category: Programming/Visual
+- name: pvk
+  url: https://pvk.ca/
+  description: Math/Programming blog by Paul Khuong.
+  category: Math, Programming/Functional
+- name: terminal.sexy
+  url: https://terminal.sexy
+  description: Color scheme creator
+  category: Programming/Tools
+- name: terminals are sexy
+  url: https://terminalsare.sexy/
+  description: A list of cool terminal applications.
+  category: Programming/Tools
+- name: chrispenner
+  url: https://chrispenner.ca/
+  description: Haskell blog by Chris Penner
+  category: Programming/Functional
+- name: recurse halite
+  url: https://recursive.cc/blog/halite-iii-postmortem.html
+  description: Recurses halite 3 postmortem
+  category: Programming
