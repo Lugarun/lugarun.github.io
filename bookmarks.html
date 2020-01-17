@@ -16,12 +16,6 @@ title: BookMarks
   <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
   {% endfor %}
 </ul>
-<h2> blogs </h2>
-<ul>
-  {% for bookmark in site.data.bookmarks.blogs %}
-  <li> <a class="bookmark" href="{{ bookmark.url }}"> {{ bookmark.name }} </a>
-  {% endfor %}
-</ul>
 <h2> other </h2>
 <ul>
   {% for bookmark in site.data.bookmarks.other %}
