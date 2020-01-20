@@ -1,6 +1,8 @@
+- name: duckduckgo
+  url: https://duckduckgo.com
 - name: github
-  link: https://github.com/Lugarun
+  url: https://github.com/Lugarun
 - name: calendar
-  link: https://calendar.google.com
+  url: https://calendar.google.com
 - name: email
-  link: https://mail.google.com
+  url: https://mail.google.com
