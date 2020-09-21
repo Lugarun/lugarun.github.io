@@ -4,3 +4,5 @@
 - name: Salz Release
   idea: Get Salz to the point where I can release it to the Halite
         community
+- name: NGDS Application
+  idea: Use [this](https://www.microsoft.com/en-us/research/publication/neural-guided-deductive-search-real-time-program-synthesis-examples/) learning algorithm to implement a simple terminal NGDS application for text transformation that you can integrate into your editor.

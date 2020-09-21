@@ -30,3 +30,11 @@
   url: https://recursive.cc/blog/halite-iii-postmortem.html
   description: Recurses halite 3 postmortem
   category: Programming
+- name: rundoc
+  url: https://github.com/eclecticiq/rundoc
+  description: Run Markdown Code Blocks
+  category: Programming
+- name: 3b1b recommendations
+  url: https://www.3blue1brown.com/recommendations
+  description: A list of cool animated math resources by 3b1b
+  categor: Programming, Math
