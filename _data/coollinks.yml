@@ -38,3 +38,24 @@
   url: https://www.3blue1brown.com/recommendations
   description: A list of cool animated math resources by 3b1b
   categor: Programming, Math
+- name: Bits, Bytes, and Words
+  description: "Jake Zimmerman's Blog"
+  url: https://blog.jez.io/
+  category: Programming/Latex
+- name: Japorized
+  url: https://japorized.ink/
+  description: "Johnson's Blog"
+  url: https://japorized.ink/
+  category: Math/Latex
+- name: mosiman
+  url: http://www.mosiman.ca/
+  description: "Dillon's Blog"
+  category: Programming/Math
+- name: "Castel's Blog"
+  description: "Gilles's Blog"
+  url: https://castel.dev/
+  category: Latex
+- name: Production Prolog Video
+  url: https://www.youtube.com/watch?v=G_eYTctGZw8
+  category: Programming
+  description: "Micheal Hendricks' Talk on Prolog"
