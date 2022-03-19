@@ -1,0 +1,43 @@
+{
+  "nodes": {
+    "hakyll": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1647373703,
+        "narHash": "sha256-Jx7pUx0pojs+psm/EezD6zJj904mNObZyosJ0hqSrhk=",
+        "owner": "jaspervdj",
+        "repo": "hakyll",
+        "rev": "83fb2e64c49cc659bdbbcc8c63f00e3f84f521eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jaspervdj",
+        "ref": "master",
+        "repo": "hakyll",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1647350163,
+        "narHash": "sha256-OcMI+PFEHTONthXuEQNddt16Ml7qGvanL3x8QOl2Aao=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3eb07eeafb52bcbf02ce800f032f18d666a9498d",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "hakyll": "hakyll",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
