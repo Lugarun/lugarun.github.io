@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lukas - 3D Printed Wireless Split Keyboard</title>
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="stylesheet" href="../css/tufte.css" />
+
+        <!--Favicon-->
+        <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+        <link rel="manifest" href="../images/site.webmanifest">    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Lukas Schmidt</a>
+            </div>
+            <nav>
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../archive.html">Archive</a>
+            </nav>
+        </header>
+
+        <main role="main">
+            <h1>3D Printed Wireless Split Keyboard</h1>
+            <article>
+    <section class="header">
+        Posted on July 31, 2022
+        
+    </section>
+    <section>
+        <p>I am a bit of a keyboard nerd.
+Way back when I bought and assembled one of the ergodox kits and
+I have been glued to the <a href="https://www.reddit.com/r/ErgoMechKeyboards/">ergonomical mechanical keyboards subreddit</a>.
+So, naturally, it was time to design and build my own split mechanical keyboard.</p>
+<p>My brother and I found a half-price <a href="https://www.creality3dofficial.com/products/ld-002h-resin-3d-printer">resin printer</a>, which I planned this project around.</p>
+<h1 id="d-modeling-software">3D Modeling Software</h1>
+<p>I have never used any digital 3d modelling software before, so there was some exploration to do.
+My brother uses <a href="https://www.creality3dofficial.com/products/ld-002h-resin-3d-printer">rhino</a>, which unfortunately only runs on Windows and costs more than I was willing to pay for this project.</p>
+<p>Instead, I initially decided to use <a href="https://openscad.org/">openscad</a>, which is fantastic.
+This software uses a DSL to construct your models by applying a set of operations like extrusions, intersections, and subtractions to a group of primitive objects.
+This approach allows you to stick your models into git, and it is straightforward to parametrize your models. Parameterized models are handy for finetuning your print.</p>
+<p><span class="marginnote">
+Openscad does cache each operation used to create your model. So it is fast to render when you add operations onto the end of the operation chain or adjust operations late in the chain. But if you change anything early in the operation chain, you can tape memes to your coworker’s desks while you wait for larger models to compile.
+</span></p>
+<p>Buuuut, I have some gripes with openscad.
+First, I found openscad too slow as my models started to get more complex.
+Openscad is a single-threaded program with no GPU support; I found this a bit infuriating as I waited for the render to update after every adjustment made early on in the operations stack.
+The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn’t have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult to model the keyboard’s enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure.</p>
+<p><span class="marginnote">
+Watching a Rhino or Solidworks wizard at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.
+</span></p>
+<p>After openscad I discovered <a href="http://www.implicitcad.org/">implicit cad</a>, which can interpret existing openscad code but also allows you to write your models in Haskell. It looks like dreams sometimes really do come true.
+By the time I found openscad, I had already modelled the key switch sockets in openscad, and my brother had modelled the enclosure. I am still in the process of remodelling the keyboard in implicitcad and maybe printing my new version sometime in the future.
+Implicitcad has support for multithreading and handles more complex models far faster than openscad. The main limitation for implicitcad is the resolution that you render. Resolutions high enough for the printer take a longer time to generate.</p>
+<p>Just the other day, a friend introduced me to
+<a href="https://solvespace.com/index.pl">solvespace</a>, which looks promising. One of the most complex parts of using openscad and implicitcad is measuring lines and lining up objects. Solvespace gives you a GUI that makes this process much more manageable. Solvespace also saves models as plaintext files, although I am not sure how readable/version control friendly they are. I have yet to give solvespace a go.</p>
+<h1 id="hotswappable-socket-design">Hotswappable Socket Design</h1>
+<p><span class="marginnote">
+<img src="../images/2022-03-19-switch-socket_1.png" />
+Bottom view of a single switch socket. The diodes and
+connector wires design is very similar to Jan Lunge’s sockets.
+</span>
+<span class="marginnote">
+<img src="../images/2022-03-19-switch-socket_2.png" />
+Top view of a single switch socket.
+</span></p>
+<p>The socket for the switch is the part of the keyboard that I spent the most time on.
+I wanted to make the switch sockets hot-swappable only using printed parts and wire similar to <a href="https://www.youtube.com/watch?v=v9r5DKZLz68&amp;t=256s">Jan Lunge’s Cherry MX Hot-Swappable
+Sockets</a>. This requires getting the cutouts for the switch pin and the wire to push up against each other and make decent contact.</p>
+<p>Having used the keyboard for a few days, I have some sticky
+key issues and sometimes some delayed presses. I am unsure if this has
+anything to do with poor contact with the switch pins, but I may have
+to adjust the channels. I do have to adjust the channels for
+the row, and column wires as the channels are so deep and narrow that
+you need a narrow tip soldering iron to solder the grid cables to the
+switch cables.
+The bottom plate of the switch sockets is also not sturdy enough. One of the sockets snapped in the current keyboard when I pushed in the switch (the first time you put in a switch, you need some pressure to bend the wires for the switch pins).</p>
+<h1 id="keyboard-layout">Keyboard Layout</h1>
+<p>I used the 36 key version of the
+corne layout for the keyboard layout. This layout barely fits into my print
+bed, but it isn’t my favourite as the thumb clusters are one
+key close to the center of the hands for my comfort. <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/lzxtre/corne_thumb_cluster_placement/">Some people
+online</a>
+have the same critcism. For the next iteration I may try to create
+my custom layout using <a href="https://www.ergopad.io/">ergopad</a> with a more
+customized thumb cluster position and column stagger. I just need
+to ensure that the keyboard still fits into the printing bed.</p>
+<h1 id="hardware">Hardware</h1>
+<p>I started on this journey in the middle of the chip shortage and I wanted a wireless rechargeable keyboard with screens.
+I am not a hardware guy so I splurged and got two <a href="https://www.adafruit.com/product/3406">Adafruit Feather nRF52s</a> because all of the cheaper alternatives were out of stock at the time.
+For the displays, I got two <a href="https://www.adafruit.com/product/4650">OLED Adafruit Wings</a>, and I got two <a href="https://www.mikroe.com/li-polymer-battery-37v-1500mah">1500mAh Li-Po batteries</a>.</p>
+<h1 id="firmware">Firmware</h1>
+<p>For the firmware, I am using the wonderful <a href="http://bluemicro.jpconstantineau.com/">BlueMicro_BLE project</a>, which supports the Feather out of the box. Communication between the halves of the keyboard is supported out of the box. I have not managed to get the screen working yet, and I am currently using the keyboard plugged in as I am still trying to figure out the best way to include a switch for the battery.</p>
+<h1 id="keymap">Keymap</h1>
+<p>I have just set up my first somewhat usable keymap and then typed out this article as practice.
+This keymap doesn’t yet have a layer for function and media keys.
+Finding a layout for 36 keys is something that I didn’t even think about until I sat down to make the layout, and it turns out it isn’t an awful amount of keys. For example, I had to make <code>Ctr</code>, <code>Win</code>, and <code>Alt</code> modifiers toggleable like shift as I couldn’t get them on the base layer along with all the other keys I wanted on the thumb cluster.</p>
+<p>Base Layer:</p>
+<pre><code>,----------------------------------.,----------------------------------.
+|   Q  |   W  |   E  |   R  |   T  ||   Y  |   U  |   I  |   O  |   P  |
+|------+------+------+------+------||------+------+------+------+------|
+|   A  |   S  |   D  |   F  |   G  ||   H  |   J  |   K  |   L  |   ;  |
+|------+------+------+------+------||------+------+------+------+------|
+|   Z  |   X  |   C  |   V  |   B  ||   N  |   M  |   ,  |   .  |   /  |
+`------+------+------+------+------||------+------+------+------+------'
+              | L(1) | Space|Enter ||Shift |Backspace|Tab|
+              `--------------------'`--------------------'</code></pre>
+<p>Layer One:</p>
+<pre><code>,----------------------------------.,----------------------------------.
+|   1  |   2  |   3  |   4  |   5  ||   6  |   7  |   8  |   9  |   0  |
+|------+------+------+------+------||------+------+------+------+------|
+|  Esc | Left | Up   | Down | Right||   -  |   =  |   [  |   ]  |   '  |
+|------+------+------+------+------||------+------+------+------+------|
+| Ctr  | Win  |Alt   | Del  | Esc  ||   \  |   `  |      |      |      |
+`------+------+------+------+------||------+------+------+------+------'
+              | L(h) |      |      || Shift|      |      |
+              `--------------------'`--------------------'</code></pre>
+<p>Even with all of the compromises, I am still able to navigate my window
+manager and tmux (slowly) and type out this article (slowly) without
+using another keyboard.</p>
+<p>The current setup is pictured below. Hopefully, there will be an update soon.</p>
+<p><img src="../image/2022-07-31-assembled-board.jpg" /></p>
+    </section>
+</article>
+
+        </main>
+    </body>
+</html>
