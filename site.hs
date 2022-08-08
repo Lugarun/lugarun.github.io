@@ -10,6 +10,18 @@ config = defaultConfiguration
   { destinationDirectory = "docs"
   }
 
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+  { feedTitle = "Lukas's Blog"
+  , feedDescription = "Lukas's part of the blogosphere"
+  , feedAuthorName = "Lukas Schmidt"
+  , feedAuthorEmail = ""
+  , feedRoot = "https://lugarun.github.io"
+  }
+
+feedCtx :: Context String
+feedCtx = postCtx <> bodyField "description"
+
 main :: IO ()
 main = hakyllWith config  $ do
     match ("images/*" .||. "css/et-book/*/*") $ do
@@ -31,6 +43,7 @@ main = hakyllWith config  $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
@@ -63,6 +76,22 @@ main = hakyllWith config  $ do
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
+
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<<
+                loadAllSnapshots "posts/*" "content"
+            renderAtom feedConfiguration feedCtx posts
+
+    create ["rss.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<<
+                loadAllSnapshots "posts/*" "content"
+            renderRss feedConfiguration feedCtx posts
 
 
 --------------------------------------------------------------------------------

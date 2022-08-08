@@ -14,3 +14,5 @@ I am an avid reader of blogs by people like [Xe Iaso](https://xeiaso.net/), [Chr
 This site is my piece of the blogosphere that I love so much.
 
 You can find some stuff on my [Github page](https://github.com/lugarun).
+
+There are [RSS](/rss.xml) and [Atom](/atom.xml) feeds for this site.
