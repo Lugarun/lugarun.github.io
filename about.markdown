@@ -6,8 +6,11 @@ title: About
 ![](/images/2022-02-16-skate-skies.jpg)
 My brothers skate skies on the Ottawa River
 </span>
-Hello all, I'm Lukas Schmidt.
 
-I am currently a [graduate student at the University of Waterloo](https://uwaterloo.ca/embedded-software-group/people-profiles/lukas-fridolin-schmidt). I am mainly working on analyzing computer power consumption patterns of computers. I am hoping to be able to validate windows system logs using the computer's power consumption to detect log tampering by malware.
+Hello all, I'm Lukas. I am constantly stuck between the desire to write a text editor, terminal multiplexor, markup language, Haskell machine learning library, [NixOs](https://nixos.org/) configuration.
+When I've managed to tear myself away from these obsessions.. um hobbies, I work on hardware validation at the [University of Waterloo](https://uwaterloo.ca/embedded-software-group/people-profiles/lukas-fridolin-schmidt).
 
-You can find my Github page [here](https://github.com/lugarun).
+I am an avid reader of blogs by people like [Xe Iaso](https://xeiaso.net/), [Chris Penner](https://chrispenner.ca/), [Dillon Chan](https://mosiman.ca/), and [Japorized](https://japorized.ink/). 
+This site is my piece of the blogosphere that I love so much.
+
+You can find some stuff on my [Github page](https://github.com/lugarun).
