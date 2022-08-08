@@ -3,11 +3,11 @@ title: 3D Printed Wireless Split Keyboard
 ---
 
 I am a bit of a keyboard nerd.
-Way back when I bought and assembled one of the ergodox kits and 
-I have been glued to the [ergonomical mechanical keyboards subreddit](https://www.reddit.com/r/ErgoMechKeyboards/).
-So, naturally, it was time to design and build my own split mechanical keyboard.
+Way back when, I bought and assembled an ergodox kit.
+Since then I have been glued to the [ergonomical mechanical keyboards subreddit](https://www.reddit.com/r/ErgoMechKeyboards/).
+At some point, I looked up and was flying down the slippery slope at full speed with plans to design and build my own endgame keyboard.. it's going to be beautiful.
 
-My brother and I found a half-price [resin printer](https://www.creality3dofficial.com/products/ld-002h-resin-3d-printer), which I planned this project around.
+My brother and I found a half-price [resin printer](https://www.creality3dofficial.com/products/ld-002h-resin-3d-printer), which I planned this project around. Resin printers are messy and toxic and create lots of waste, but they are also magical. This printer blows me away with the quality of prints it can create, especially since it is so forgiving to a new print head like me.
 
 # 3D Modeling Software
 
@@ -15,7 +15,7 @@ I have never used any digital 3d modelling software before, so there was some ex
 My brother uses [rhino](https://www.creality3dofficial.com/products/ld-002h-resin-3d-printer), which unfortunately only runs on Windows and costs more than I was willing to pay for this project.
 
 Instead, I initially decided to use [openscad](https://openscad.org/), which is fantastic.
-This software uses a DSL to construct your models by applying a set of operations like extrusions, intersections, and subtractions to a group of primitive objects.
+This software uses a DSL to construct your models by applying series of operations like extrusions, intersections, and subtractions to a small set of primitive objects.
 This approach allows you to stick your models into git, and it is straightforward to parametrize your models. Parameterized models are handy for finetuning your print.
 
 
@@ -26,11 +26,11 @@ Openscad does cache each operation used to create your model. So it is fast to r
 Buuuut, I have some gripes with openscad.
 First, I found openscad too slow as my models started to get more complex.
 Openscad is a single-threaded program with no GPU support; I found this a bit infuriating as I waited for the render to update after every adjustment made early on in the operations stack.
-The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn't have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult to model the keyboard's enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure.
+The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn't have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult for me to model the keyboard's enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure. Checkout some of his work [here](https://www.bildhaus.ca/).
 
 
 <span class="marginnote">
-Watching a Rhino or Solidworks wizard at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.
+Watching Rhino or Solidworks wizards at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.
 </span>
 
 After openscad I discovered [implicit cad](http://www.implicitcad.org/), which can interpret existing openscad code but also allows you to write your models in Haskell. It looks like dreams sometimes really do come true.
@@ -122,6 +122,6 @@ Even with all of the compromises, I am still able to navigate my window
 manager and tmux (slowly) and type out this article (slowly) without
 using another keyboard.
 
-The current setup is pictured below. Hopefully, there will be an update soon.
+The current setup is pictured below. Once the models are nicely parameterized and have all of their kinks ironed out I hope to post them online. Hopefully, there will be an update soon.
 
-![](/image/2022-07-31-assembled-board.jpg)
+![](/images/2022-07-31-assembled-board.jpg)
