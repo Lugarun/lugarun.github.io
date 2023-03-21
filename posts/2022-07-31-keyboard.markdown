@@ -70,7 +70,7 @@ The bottom plate of the switch sockets is also not sturdy enough. One of the soc
 I used the 36 key version of the
 corne layout for the keyboard layout. This layout barely fits into my print
 bed, but it isn't my favourite as the thumb clusters are one
-key close to the center of the hands for my comfort. [Some people
+key closer to the center of the hands for my comfort. [Some people
 online](https://www.reddit.com/r/ErgoMechKeyboards/comments/lzxtre/corne_thumb_cluster_placement/)
 have the same critcism. For the next iteration I may try to create
 my custom layout using [ergopad](https://www.ergopad.io/) with a more
