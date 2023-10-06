@@ -2,16 +2,18 @@
 title: About
 ---
 
-<span class="marginnote">
-![](/images/2022-02-16-skate-skies.jpg)
-My brother's skate skies on the Ottawa River
-</span>
+Hello all, welcome to the blog of the ferocious nerd Lukas!
+I dissolve into topics like:
 
-Hello all, I'm Lukas. I am constantly stuck between the desire to write a text editor, terminal multiplexor, markup language, Haskell machine learning library, and to work on my [NixOs](https://nixos.org/) configuration.
-When I've managed to tear myself away from these obsessions.. um hobbies, I work on a statistical model for hardware validation at the [University of Waterloo](https://uwaterloo.ca/embedded-software-group/people-profiles/lukas-fridolin-schmidt).
-
-I am an avid reader of blogs by people like [Xe Iaso](https://xeiaso.net/), [Chris Penner](https://chrispenner.ca/), [Dillon Chan](https://mosiman.ca/), [Julio](https://julio.lol/), and [Japorized](https://japorized.ink/). 
-This site is my addition to the blogosphere that I love so much.
+- Bayesian Statistics, my [thesis](https://uwspace.uwaterloo.ca/handle/10012/19421) was on a Bayesian approach to novelty detection in high dimensional spaces
+- Sampling, you're telling me that No U-Turn Hamiltonian Monte Carlo sampling isn't just as cool a use of new computing capabilities as transformers?!
+- Lambda calculous-based hardware like the [reduceron](https://www.cs.york.ac.uk/fp/reduceron/), it seems like such a cool way around the von Neumann bottleneck
+- Keyboards, specifically wireless split mechanical keyboards with screens on them
+- Type systems, I want nothing more than a fast compiler for a dependently typed language that **I** understand
+- Text, emacs and org-mode play a tug-of-war with Kakoune, markdown, and posix for my heart
+- Reproducible research, at first this meant big org-mode files to me, now this means [NixOs](https://nixos.org/) environments with make files that generate final results from hashed data along with extensive use of git's features
+- Language design, specifically that of [Unison](https://www.unison-lang.org/), [Idris2](https://github.com/idris-lang/Idris2), Haskell, and [ATS](https://www.cs.bu.edu/~hwxi/atslangweb/)
+- Yeast, I like my yeast in sour dough, apple cider, juices, and as a nutritional topping
 
 You can find some stuff on my [Github page](https://github.com/lugarun).
 

@@ -6,10 +6,56 @@
     <id>https://lugarun.github.io/atom.xml</id>
     <author>
         <name>Lukas Schmidt</name>
-        <email></email>
+        
     </author>
-    <updated>2022-07-31T00:00:00Z</updated>
+    <updated>2023-03-21T00:00:00Z</updated>
     <entry>
+    <title>Keyboard Firmware Update</title>
+    <link href="https://lugarun.github.io/posts/2023-03-21-keyboard-firmware-update.html" />
+    <id>https://lugarun.github.io/posts/2023-03-21-keyboard-firmware-update.html</id>
+    <published>2023-03-21T00:00:00Z</published>
+    <updated>2023-03-21T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+    <section class="header">
+        Posted on March 21, 2023
+        
+    </section>
+    <section>
+        <p>This blog post is an update on my <a href="./2022-07-31-keyboard.html">split wireless keyboard journey</a>.
+Not much has changed in terms of hardware other than that I have added the batteries to the keyboard halfs and made some wrist rests.
+What has changed a ton is the firmware and keymap.
+After a long period of the keyboard sitting on the corner of my desk, I have finally got them up and running with a keymap that I am happy using on a daily basis.</p>
+<p>My keyboard only has 36 keys.
+So lots of trickery is required to jam the functionality of 104 keys into this small package.
+Most small keyboards do this through a combination of the following:</p>
+<ul>
+<li><em>layers:</em> Each key on the keyboard does something different when a different ‘layer’ is activated. Layers are typically activated by holding down a key.</li>
+<li><em>activation modes:</em> Keys can be assigned multiple functions based on how they are pressed. For example, a long hold might register as a shift keystroke where a tap might be the letter ‘b,’ and a double tap might register as ‘B.’</li>
+<li><em>chording:</em> In chording, pressing multiple keys simultaneously activates different functions based on which keys are pressed. This is how <a href="https://en.wikipedia.org/wiki/Stenotype">Stenotype</a> keyboards work.</li>
+<li><em>tap dance:</em> Tap dance is activation modes taken so far as to be something else. Keys are pressed multiple times to access different functionality as the main method of multiplexing the functionality of a key. Ben Vallack has a great <a href="https://www.youtube.com/watch?v=XBV0piKtNjI">video</a> about what you can do with this method.</li>
+</ul>
+<p>After experimentation with my layer-based keymap design that mostly relied on shift key style layers, I discovered home row mods.
+Precondition has a great <a href="https://precondition.github.io/home-row-mods">blog post</a> going into the details on what home row mods are and how you might want to use them.
+This seemed like a great idea; however, home row mods require some careful fine-tuning to ensure that the timing doesn’t result in lots of accidental modifier activations.
+Thankfully, there is a preconfigured keymap called <a href="https://github.com/manna-harbour/miryoku/">Miryoku</a> that has good default values that we can start to experiment with.
+Miryoku doesn’t have an implementation for the <a href="http://bluemicro.jpconstantineau.com/">BlueMicro_BLE</a> firmware I was using in the previous post; however, it does have one for <a href="https://zmk.dev/">ZMK</a>.</p>
+<p>Switching to ZMK with the Adafruit Feather nRF52 microcontrollers turned out to be a challenge for someone not familiar with the ecosystem.
+ZMK doesn’t natively support the Feather; however, there are unmerged <a href="https://github.com/zmkfirmware/zmk/pull/1465">pull requests</a> which seem to have gotten Feathers working.
+ZMK is set up so you can easily create your configuration in a separate git repo with GitHub actions to build against the current ZMK repo.
+The Miryoku ZMK implementation is simply one of these ZMK configuration repos for you to work with.
+It turned out to be pretty straightforward to integrate <a href="https://github.com/tmbutcher">tmbutcher’s</a> configuration into my <a href="https://github.com/Lugarun/miryoku_zmk">Miryoku ZMK configuration</a>.
+Welll, it turned out to be pretty straightforward after a month of on-and-off debugging that I am still working on forgetting.</p>
+<p>Miryoku has so far been so amazing that I have become hesitant to change anything about it.
+The home row mod timings are so good that from the get-go I have had negligible amounts of miss-fires.
+As with any few key layout, it takes some time to get used to navigating programs like <a href="https://github.com/tmux/tmux">tmux</a>, <a href="https://kakoune.org/">kakoune</a>, or a <a href="https://xmonad.org/">tiling window manager</a> but the home row mods feel so much better than constant pinky workouts.
+One thing I do want to eventually add is a gaming layer, but for now, I haven’t been playing games much, and when I do, it is Rocket League with a controller.</p>
+<p>ZMK has so far been a joy to work with.
+The next big ZMK steps for me are to fix a Bluetooth connection bug and to work out display support, but I will leave those for another day.</p>
+    </section>
+</article>
+]]></summary>
+</entry>
+<entry>
     <title>3D Printed Wireless Split Keyboard</title>
     <link href="https://lugarun.github.io/posts/2022-07-31-keyboard.html" />
     <id>https://lugarun.github.io/posts/2022-07-31-keyboard.html</id>
@@ -32,34 +78,29 @@ My brother uses <a href="https://www.creality3dofficial.com/products/ld-002h-res
 <p>Instead, I initially decided to use <a href="https://openscad.org/">openscad</a>, which is fantastic.
 This software uses a DSL to construct your models by applying series of operations like extrusions, intersections, and subtractions to a small set of primitive objects.
 This approach allows you to stick your models into git, and it is straightforward to parametrize your models. Parameterized models are handy for finetuning your print.</p>
-<p><span class="marginnote">
-Openscad does cache each operation used to create your model. So it is fast to render when you add operations onto the end of the operation chain or adjust operations late in the chain. But if you change anything early in the operation chain, you can tape memes to your coworker’s desks while you wait for larger models to compile.
-</span></p>
 <p>Buuuut, I have some gripes with openscad.
 First, I found openscad too slow as my models started to get more complex.
 Openscad is a single-threaded program with no GPU support; I found this a bit infuriating as I waited for the render to update after every adjustment made early on in the operations stack.
-The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn’t have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult for me to model the keyboard’s enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure. Checkout some of his work <a href="https://www.bildhaus.ca/">here</a>.</p>
-<p><span class="marginnote">
-Watching Rhino or Solidworks wizards at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.
-</span></p>
+Openscad does cache each operation used to create your model. So it is fast to render when you add operations onto the end of the operation chain or adjust operations late in the chain. But if you change anything early in the operation chain, you can tape memes to your coworker’s desks while you wait for larger models to compile.</p>
+<p>The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn’t have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult for me to model the keyboard’s enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure. Checkout some of his work <a href="https://www.bildhaus.ca/">here</a>.
+Watching Rhino or Solidworks wizards at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.</p>
 <p>After openscad I discovered <a href="http://www.implicitcad.org/">implicit cad</a>, which can interpret existing openscad code but also allows you to write your models in Haskell. It looks like dreams sometimes really do come true.
 By the time I found openscad, I had already modelled the key switch sockets in openscad, and my brother had modelled the enclosure. I am still in the process of remodelling the keyboard in implicitcad and maybe printing my new version sometime in the future.
 Implicitcad has support for multithreading and handles more complex models far faster than openscad. The main limitation for implicitcad is the resolution that you render. Resolutions high enough for the printer take a longer time to generate.</p>
 <p>Just the other day, a friend introduced me to
 <a href="https://solvespace.com/index.pl">solvespace</a>, which looks promising. One of the most complex parts of using openscad and implicitcad is measuring lines and lining up objects. Solvespace gives you a GUI that makes this process much more manageable. Solvespace also saves models as plaintext files, although I am not sure how readable/version control friendly they are. I have yet to give solvespace a go.</p>
 <h1 id="hotswappable-socket-design">Hotswappable Socket Design</h1>
-<p><span class="marginnote">
-<img src="/images/2022-03-19-switch-socket_1.png" />
-Bottom view of a single switch socket. The diodes and
-connector wires design is very similar to Jan Lunge’s sockets.
-</span>
-<span class="marginnote">
-<img src="/images/2022-03-19-switch-socket_2.png" />
-Top view of a single switch socket.
-</span></p>
 <p>The socket for the switch is the part of the keyboard that I spent the most time on.
 I wanted to make the switch sockets hot-swappable only using printed parts and wire similar to <a href="https://www.youtube.com/watch?v=v9r5DKZLz68&amp;t=256s">Jan Lunge’s Cherry MX Hot-Swappable
 Sockets</a>. This requires getting the cutouts for the switch pin and the wire to push up against each other and make decent contact.</p>
+<figure>
+<img src="/images/2022-03-19-switch-socket_1.png" alt="Bottom view of a single switch socket. The diodes and connector wires design is very similar to Jan Lunge’s sockets." />
+<figcaption aria-hidden="true">Bottom view of a single switch socket. The diodes and connector wires design is very similar to Jan Lunge’s sockets.</figcaption>
+</figure>
+<figure>
+<img src="/images/2022-03-19-switch-socket_2.png" alt="Top view of a single switch socket." />
+<figcaption aria-hidden="true">Top view of a single switch socket.</figcaption>
+</figure>
 <p>Having used the keyboard for a few days, I have some sticky
 key issues and sometimes some delayed presses. I am unsure if this has
 anything to do with poor contact with the switch pins, but I may have
@@ -72,7 +113,7 @@ The bottom plate of the switch sockets is also not sturdy enough. One of the soc
 <p>I used the 36 key version of the
 corne layout for the keyboard layout. This layout barely fits into my print
 bed, but it isn’t my favourite as the thumb clusters are one
-key close to the center of the hands for my comfort. <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/lzxtre/corne_thumb_cluster_placement/">Some people
+key closer to the center of the hands for my comfort. <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/lzxtre/corne_thumb_cluster_placement/">Some people
 online</a>
 have the same critcism. For the next iteration I may try to create
 my custom layout using <a href="https://www.ergopad.io/">ergopad</a> with a more
@@ -110,8 +151,8 @@ Finding a layout for 36 keys is something that I didn’t even think about until
               `--------------------&#39;`--------------------&#39;</code></pre>
 <p>Even with all of the compromises, I am still able to navigate my window
 manager and tmux (slowly) and type out this article (slowly) without
-using another keyboard.</p>
-<p>The current setup is pictured below. Once the models are nicely parameterized and have all of their kinks ironed out I hope to post them online. Hopefully, there will be an update soon.</p>
+using another keyboard.
+The current setup is pictured below.</p>
 <p><img src="/images/2022-07-31-assembled-board.jpg" /></p>
     </section>
 </article>

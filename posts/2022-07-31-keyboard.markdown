@@ -18,20 +18,14 @@ Instead, I initially decided to use [openscad](https://openscad.org/), which is 
 This software uses a DSL to construct your models by applying series of operations like extrusions, intersections, and subtractions to a small set of primitive objects.
 This approach allows you to stick your models into git, and it is straightforward to parametrize your models. Parameterized models are handy for finetuning your print.
 
-
-<span class="marginnote">
-Openscad does cache each operation used to create your model. So it is fast to render when you add operations onto the end of the operation chain or adjust operations late in the chain. But if you change anything early in the operation chain, you can tape memes to your coworker's desks while you wait for larger models to compile.
-</span>
-
 Buuuut, I have some gripes with openscad.
 First, I found openscad too slow as my models started to get more complex.
 Openscad is a single-threaded program with no GPU support; I found this a bit infuriating as I waited for the render to update after every adjustment made early on in the operations stack.
+Openscad does cache each operation used to create your model. So it is fast to render when you add operations onto the end of the operation chain or adjust operations late in the chain. But if you change anything early in the operation chain, you can tape memes to your coworker's desks while you wait for larger models to compile.
+
 The second gripe I have is with the DSL openscad uses. The DSL is a functional language that doesn't have first-class functions. The third gripe is that it is tough to model things that have curves. This gripe made it too difficult for me to model the keyboard's enclosure as I wanted. Luckily my Rhino wizard of a brother helped me out and modelled the enclosure. Checkout some of his work [here](https://www.bildhaus.ca/).
-
-
-<span class="marginnote">
 Watching Rhino or Solidworks wizards at work is mindblowing; they can manipulate 3d objects faster than I can process what I am even looking at.
-</span>
+
 
 After openscad I discovered [implicit cad](http://www.implicitcad.org/), which can interpret existing openscad code but also allows you to write your models in Haskell. It looks like dreams sometimes really do come true.
 By the time I found openscad, I had already modelled the key switch sockets in openscad, and my brother had modelled the enclosure. I am still in the process of remodelling the keyboard in implicitcad and maybe printing my new version sometime in the future.
@@ -42,19 +36,13 @@ Just the other day, a friend introduced me to
 
 # Hotswappable Socket Design
 
-<span class="marginnote">
-![](/images/2022-03-19-switch-socket_1.png)
-Bottom view of a single switch socket. The diodes and
-connector wires design is very similar to Jan Lunge's sockets.
-</span>
-<span class="marginnote">
-![](/images/2022-03-19-switch-socket_2.png)
-Top view of a single switch socket.
-</span>
-
 The socket for the switch is the part of the keyboard that I spent the most time on.
 I wanted to make the switch sockets hot-swappable only using printed parts and wire similar to [Jan Lunge's Cherry MX Hot-Swappable
 Sockets](https://www.youtube.com/watch?v=v9r5DKZLz68&t=256s). This requires getting the cutouts for the switch pin and the wire to push up against each other and make decent contact.
+
+![Bottom view of a single switch socket. The diodes and connector wires design is very similar to Jan Lunge's sockets.](/images/2022-03-19-switch-socket_1.png)
+
+![Top view of a single switch socket.](/images/2022-03-19-switch-socket_2.png)
 
 Having used the keyboard for a few days, I have some sticky
 key issues and sometimes some delayed presses. I am unsure if this has
@@ -105,6 +93,8 @@ Base Layer:
               | L(1) | Space|Enter ||Shift |Backspace|Tab|
               `--------------------'`--------------------'
 ```
+
+
 Layer One:
 ```
 ,----------------------------------.,----------------------------------.
@@ -121,7 +111,6 @@ Layer One:
 Even with all of the compromises, I am still able to navigate my window
 manager and tmux (slowly) and type out this article (slowly) without
 using another keyboard.
-
-The current setup is pictured below. Once the models are nicely parameterized and have all of their kinks ironed out I hope to post them online. Hopefully, there will be an update soon.
+The current setup is pictured below.
 
 ![](/images/2022-07-31-assembled-board.jpg)

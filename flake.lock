@@ -3,27 +3,26 @@
     "hakyll": {
       "flake": false,
       "locked": {
-        "lastModified": 1647373703,
-        "narHash": "sha256-Jx7pUx0pojs+psm/EezD6zJj904mNObZyosJ0hqSrhk=",
+        "lastModified": 1695243027,
+        "narHash": "sha256-8nANgK0JuW1xJrLI18RSo5D/hwu9kDATFZgoH5UY+tQ=",
         "owner": "jaspervdj",
         "repo": "hakyll",
-        "rev": "83fb2e64c49cc659bdbbcc8c63f00e3f84f521eb",
+        "rev": "296dbdc4eafa8a907ad5fd676facd5e52d8de850",
         "type": "github"
       },
       "original": {
         "owner": "jaspervdj",
-        "ref": "master",
         "repo": "hakyll",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1647350163,
-        "narHash": "sha256-OcMI+PFEHTONthXuEQNddt16Ml7qGvanL3x8QOl2Aao=",
+        "lastModified": 1696419054,
+        "narHash": "sha256-EdR+dIKCfqL3voZUDYwcvgRDOektQB9KbhBVcE0/3Mo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3eb07eeafb52bcbf02ce800f032f18d666a9498d",
+        "rev": "7131f3c223a2d799568e4b278380cd9dac2b8579",
         "type": "github"
       },
       "original": {

@@ -1,6 +1,6 @@
 {
   inputs.hakyll = {
-    url = "github:jaspervdj/hakyll/master";
+    url = "github:jaspervdj/hakyll";
     flake = false;
   };
 
