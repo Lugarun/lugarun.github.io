@@ -7,8 +7,131 @@
         <description><![CDATA[Lukas's part of the blogosphere]]></description>
         <atom:link href="https://lugarun.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 21 Mar 2023 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 09 Oct 2023 00:00:00 UT</lastBuildDate>
         <item>
+    <title>My Data Science Project Tooling</title>
+    <link>https://lugarun.github.io/posts/2023-10-09-my-data-science-project-tooling.html</link>
+    <description><![CDATA[<article>
+    <section class="header">
+        Posted on October  9, 2023
+        
+    </section>
+    <section>
+        <p>I have spent a lot of time thinking about how to structure data science projects.
+Data science projects require so much infrastructure as they need to handle:</p>
+<ul>
+<li>code</li>
+<li>one-off scripts</li>
+<li>lots and lots of documentation with figures</li>
+<li>potentially very large datasets</li>
+<li>long hardware-specific processes that may require compute clusters</li>
+</ul>
+<p>All of this is just for model development and experimentation, bringing a model to production requires another suite of tools.
+It is so important to have an organized and capable methodology that will help you speed up your feedback loops and keep your team on the same page.</p>
+<h1 id="git-based-experiment-tracking">Git-based Experiment Tracking</h1>
+<p>I base my approach off of gitflow-style software development.
+I am strict about the git repository only containing hashes, documentation, and code.
+The git repository shouldn’t contain any data, plots, pdf files, figures, or experiment results.
+Instead, I store experiment results in pull requests in a git forge like gitea.</p>
+<p>How does this work? Each experiment lives in a git branch and my main branch only contains common libraries for data access, engineering, visualization, and of course the models.
+Let’s say I want to run an experiment that compares the model performance for a set of feature representations.
+I first create a pull request with a short description, and then write my experiment script and markdown report in the branch.
+As I am working on the experiment I attach my results, reports, and plots to comments in the pull request.
+The most important part is that any artifact that gets posted in the pull request must have an associated GNUMake command that will generate it from scratch in the commit directly preceding the comment.
+This allows the assets to be directly tied to the code that generates them without polluting the git repository.</p>
+<p>This approach is similar to the <a href="https://dvc.org/doc/start/experiments/experiment-tracking">approach used by DVC</a>.</p>
+<p>I don’t mention Jupyter notebooks because I honestly don’t know how to deal with them.
+I personally don’t use them as I prefer the flexibility of Python scripts with outputs embedded in a markdown file.
+The only key item that I am missing is the caching that Jupyter does, I get most of this back by interacting with the Python script from an iPython repl, but the Jupyter notebook experience is still better.</p>
+<h1 id="folder-structure">Folder Structure</h1>
+<p>My typical populated folder structure looks something like this:</p>
+<pre><code>├── .envrc
+├── .gitignore
+├── flake.lock
+├── flake.nix
+├── Makefile
+├── poetry.lock
+├── pyproject.toml
+├── readme.md
+├── src
+│   ├── data-access.py
+│   ├── data-engineering.py
+│   ├── visualization.py
+│   ├── check-hash.sh
+│   └── model.py
+├── generated
+│   └── 2023-10-07-Covariance-Matrix-Prior-Investigation
+│       ├── assets
+│       │   ├── data
+│       │   │   ├── raw.csv
+│       │   │   ├── features.csv
+│       │   │   └── results.csv
+│       │   └── figures
+│       │       ├── plot1.svg
+│       │       ├── plot2.svg
+│       │       ├── plot3.svg
+│       │       ├── plot3-lab-presentation-format.svg
+│       │       └── plot4.svg
+│       └── outputs
+│           ├── 2023-10-10-lab-presentation.pdf
+│           └── report.pdf
+└── scripts
+    └── 2023-10-07-Covariance-Matrix-Prior-Investigation
+        ├── report.md
+        ├── hashes.txt
+        ├── 2023-10-10-lab-presentation.md
+        └── script.py</code></pre>
+<p>Note that the generated folder is ignored by git, this folder contains all generated assets and intermediate stages.
+The scripts folder contains the scripts and associated documentation for each experiment.
+Note that each experiment is given a unique folder in the scripts and generated folders, this is because you will often want to pull up the results from multiple experiments simultaneously.
+Now you can simply merge all the relevant branches together and conflicts will be restricted to the <code>src</code> directory.</p>
+<h1 id="reproduciblility">Reproduciblility</h1>
+<p>In addition to insisting that any shared artifacts can be created from scratch with a make command, I also insist that the relevant software used is reproducible.
+This prevents library mismatches in the complex wonderland that is the Python ecosystem.</p>
+<p>I use a <a href="https://nixos.org/">nix</a> environment to version all of the software that is used in the project.
+To manage Python, I use poetry from within Nix.
+Between flake.lock and poetry.lock, the entire software stack can be reproduced simply by entering the directory and running <code>nix develop</code>.
+This also allows for easy setup, as to set up all the tools for your project you just need to load the nix and poetry environments.</p>
+<p>I currently haven’t figured out a good data versioning story.
+DVC really excels here but the best I can do is save a hash of the data and run a script that checks whether or not the data returned by the data fetcher matches the hash or not.
+To be honest, I don’t end up actually doing this. My data is usually stored in Postgres databases or object storage that I assume to be static.</p>
+<h1 id="build-systems-pipeline-definition-and-execution">Build Systems: Pipeline definition and execution</h1>
+<p>I use Makefiles to define my pipelines, I have looked into a bunch tools including <a href="https://dvc.org/">DVC</a>, <a href="https://dagster.io/">Dagster</a>, <a href="https://hackage.haskell.org/package/shake">Shake</a>, <a href="https://snakemake.readthedocs.io/en/stable/">SnakeMake</a>, <a href="https://bazel.build/">Bazel</a>, etc.
+However, I ended up back with Makefiles because of their simplicity and ease of setup.
+There are three things that I want from my pipeline executor.</p>
+<ol type="1">
+<li>I want little to no setup cost.
+I want to be able to run my pipelines without having to have access to a swarm that requires full-time job levels of maintenance, I want to be able to run scripts on my local machines on the fly.</li>
+<li>I want cached execution, ideally it would be cached by hash with some sort of centralized repository in which intermediate steps lived so that I could run experiments locally on small outputs of remote data crunching steps.</li>
+<li>I want dynamic pipelines, for example, I want to be able to define steps for each file outputted by a step, and then I want to feed all said files into an accumulation step once they are all done running.</li>
+<li>I want steps to run in parallel, ideally they would be able to run in parallel on both local hardware with the ability to limit processes that run in parallel by memory requirements and GPU requirements.</li>
+<li>I want it to support ployglot steps, I constantly dream of languages other than Python and just can’t bring myself to kill those dreams.</li>
+</ol>
+<p>GNUMake falls short on most of these.
+In practice, I have learned that my first two requirements are the most important for me.
+To actually use the build system for all reports and plots it has to be fast and easy enough that I actually bother to define everything.
+GNUMake makes this effortless, I have general rules set up that I hardly ever have to change that along with my file conventions automatically generate the outputs from the inputs.</p>
+<p>GNUMake does cached execution, but only by file date. This is just barely good enough for me.
+GNUMake also can do a limited version of parallel execution which isn’t good enough for projects that have processes that require the GPU, there may be options to address this with tools like taskspooler, however, I have doubts about how easy it would be to export dependencies defined in the make file to cluster managers.
+GNUMake can’t do dynamic pipelines, this one sucks.</p>
+<p>The main contender is DVC, another one is <a href="https://github.com/PapenfussLab/bionix">bionix</a> although it doesn’t look like it is maintained anymore.
+DVC has hashed caching, it has hashed external data sources, it looks great, where it currently falls apart is with parallel or swarm execution.
+However it seems like DVC is working on this, I imagine that I will eventually switch to DVC although I think that something like bionix would be the coolest.</p>
+<p>If you want to dive further into build systems, check out <a href="https://www.microsoft.com/en-us/research/uploads/prod/2018/03/build-systems.pdf">Build Systems à la Carte</a> or <a href="https://signalsandthreads.com/build-systems/">this episode</a> of Signals &amp; Threads.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>So there we have it, this is how I organize my data science projects.
+They of course don’t all look exactly like this.
+My thesis for example doesn’t have the experiment branch structure and different teams do things differently, however, this has worked fairly well for me.
+It is a wonderful experience to have your entire project history organized as a series of well-defined experiments that you can quickly reference and reproduce.
+It is also a wonderful system to onboard newcomers into as they can go back and explore the history of the project, seeing where assumptions come from and where things may have been missed.</p>
+    </section>
+</article>
+]]></description>
+    <pubDate>Mon, 09 Oct 2023 00:00:00 UT</pubDate>
+    <guid>https://lugarun.github.io/posts/2023-10-09-my-data-science-project-tooling.html</guid>
+    <dc:creator>Lukas Schmidt</dc:creator>
+</item>
+<item>
     <title>Keyboard Firmware Update</title>
     <link>https://lugarun.github.io/posts/2023-03-21-keyboard-firmware-update.html</link>
     <description><![CDATA[<article>
