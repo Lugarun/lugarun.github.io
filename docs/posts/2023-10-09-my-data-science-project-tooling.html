@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Lukas - My Data Science Project Tooling</title>
+        <title>Lukas - Data Science Project Tooling</title>
         <link rel="stylesheet" href="../css/default.css" />
         <link rel="stylesheet" href="../css/syntax.css" />
 
@@ -21,7 +21,7 @@
           </nav>
         </header>
         <main role="main">
-            <h1>My Data Science Project Tooling</h1>
+            <h1>Data Science Project Tooling</h1>
             <article>
     <section class="header">
         Posted on October  9, 2023
@@ -43,19 +43,19 @@ It is important to have an organized and capable methodology that will help you 
 <p>I base my project versioning approach off of <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow#:~:text=What%20is%20Gitflow%3F,lived%20branches%20and%20larger%20commits.">gitflow</a> style software development.
 I am strict about the git repository only containing hashes, documentation, and code.
 The git repository shouldn’t contain any data, plots, PDFs, figures, or experiment results.
-I am strict on these points because artifacts obfucate git diffs and can quickly grow the repo to an unmanegable size.
-Additionally, and maybe the real reason, I believe that keeping generated artifacts in version control makes it more difficult to ensure that they are reproducibile.
+I am strict on these points because artifacts obfuscate git diffs and can quickly grow the repo to an unmanageable size.
+I also believe that keeping generated artifacts in version control makes it more difficult to ensure that they are reproducible.
 Instead, I store experiment results in pull requests on a git forge (e.g. <a href="https://about.gitea.com/">gitea</a> ).</p>
 <p>How does this work? Each experiment lives in a git branch and my main branch only contains common libraries for data access, engineering, visualization, and of course, the models.
 Let’s say I want to run an experiment that compares model performance for a set of feature representations.
-First, I create a pull request with a short description, and then work on my experiment script and markdown report in the associated git branch.
+First, I create a pull request with a short description and then work on my experiment script and markdown report in the associated git branch.
 As I am working on the experiment, I attach my results, reports, and plots to comments in the pull request.
 If you want artifacts to be easily reproducible in the future, I suggest that any artifact that gets posted in the pull request should have an associated GNUMake command that will generate it from scratch in the commit directly preceding the comment.
 This style allows the assets to be directly tied to the code that generates them without polluting the git repository.</p>
 <p>This approach is similar to the <a href="https://dvc.org/doc/start/experiments/experiment-tracking">approach used by DVC</a>.</p>
-<p>I don’t keep Jupyter notebooks in my git repositories because they act more like generated assets than code with respect to git.
-Instead I use Python scripts with outputs embedded in markdown files.
-Jupyter notebooks are convenient, beautiful, and have great caching features, but they also have out of order execution and they don’t integrate well with most text editors, git, or build systems.</p>
+<p>I don’t keep Jupyter Notebooks in my git repositories because they act more like generated assets than code with respect to git.
+Instead, I use Python scripts with outputs embedded in markdown files.
+Jupyter notebooks are convenient, beautiful, and have great caching features, but they also have out-of-order execution and they don’t integrate well with most text editors, git, or build systems.</p>
 <h1 id="folder-structure">Folder Structure</h1>
 <p>My typical populated folder structure looks something like this:</p>
 <pre><code>├── .envrc
@@ -94,7 +94,7 @@ Jupyter notebooks are convenient, beautiful, and have great caching features, bu
         ├── hashes.txt
         ├── 2023-10-10-lab-presentation.md
         └── script.py</code></pre>
-<p>The generated folder is ignored by git, this folder contains all generated assets and intermediate stages.
+<p>The generated folder is ignored by git; this folder contains all generated assets and intermediate stages.
 The scripts folder contains the scripts and associated documentation for each experiment.
 I give each experiment a unique subfolder in the scripts and generated folders because you will often want to pull up the results from multiple experiments simultaneously.
 Now, you can simply merge all the relevant branches together and conflicts will be restricted to the <code>src</code> directory.</p>
@@ -104,47 +104,57 @@ This prevents library mismatches in the complex wonderland that is the Python pa
 <p>I use a <a href="https://nixos.org/">Nix</a> environment to version all of the software that I use in the project.
 To manage Python packages, I use Poetry from within Nix.
 Between the <code>flake.lock</code> and <code>poetry.lock</code> files, the entire software stack can be reproduced simply by entering the directory and running <code>nix develop</code>.</p>
-<p>With the code fixed in git, and the software fixed via the lock files, all that remains is to fix the data.
+<p>With the code fixed in git and the software fixed via the lock files, all that remains is to fix the data.
 DVC excels here as the name Data Version Control would imply.
-However, I am currently not using DVC, instead I have a <code>hashes.txt</code> file.
+However, I am currently not using DVC; instead, I have a <code>hashes.txt</code> file.
 This file contains hashes of all data used in an experiment.
 When I later return to the experiment, I can then check the current data against the saved hashes of the original data.
 To be honest, I don’t end up actually doing this.
 My data is usually stored in Postgres databases or object storage with backups and some redundancy that I assume to be static.</p>
 <h1 id="build-systems-pipeline-definition-and-execution">Build Systems: Pipeline definition and execution</h1>
-<p>I have looked into a bunch tools to define my pipelines (<a href="https://dvc.org/">DVC</a>, <a href="https://dagster.io/">Dagster</a>, <a href="https://hackage.haskell.org/package/shake">Shake</a>, <a href="https://snakemake.readthedocs.io/en/stable/">SnakeMake</a>, <a href="https://bazel.build/">Bazel</a>, etc.); however, I ended up back with Makefiles because of their simplicity and ease of setup.
+<p>I have looked into a bunch tools to define my pipelines (<a href="https://dvc.org/">DVC</a>, <a href="https://dagster.io/">Dagster</a>, <a href="https://hackage.haskell.org/package/shake">Shake</a>, <a href="https://snakemake.readthedocs.io/en/stable/">SnakeMake</a>, <a href="https://bazel.build/">Bazel</a>, etc.); however, I ended up back with GNU Makefiles because of their simplicity and ease of setup.
 There are five features that I want from my pipeline executor:</p>
 <ol type="1">
 <li>Little to no setup cost.
-It shouldn’t require a full time job to maintain a computer cluster to run my pipelines.
-The pipelines should be exacutable in full or partially on my local computer without any setup.</li>
-<li>Cached execution, ideally the pipeline would be cached by hash with some sort of centralized repository in which intermediate steps live.
+It shouldn’t require a full-time job to maintain a computer cluster to run my pipelines.
+The pipelines should be executable in full or partially on my local computer without any setup.</li>
+<li>Cached execution.
+Ideally, the pipeline would be cached by hash with some sort of centralized repository in which intermediate steps live.
 A centralized cache would be a great way for me to switch between compute clusters and my local computer for analysis of experiment results.</li>
-<li>Support ployglot steps, while everything can be done in Python, not everything should.</li>
-<li>Dynamic pipelines, pipeline steps should depend on previous results.
-For example, I want to be able to define steps for each file outputted by a step, and then I want to feed all said files into an accumulation step once they are all done running.</li>
+<li>Support polyglot steps.
+While everything can be done in Python, not everything should.</li>
+<li>Dynamic pipelines.
+Pipeline steps should depend on previous results.
+For example, I want to be able to define steps based on the number and type of output of previous steps.
+Then, I may want to feed all previous outputs into an accumulation step.</li>
 <li>Parallel and compute cluster execution.
-Ideally pipeline steps would be able to run in parallel on with the ability to limit processes that run in parallel by memory requirements and GPU requirements.
+Ideally, pipeline steps would be able to run in parallel with the ability to limit processes by memory requirements and GPU requirements.
 For large projects, it would also be a benefit to submit the pipeline to compute cluster job queues.</li>
 </ol>
 <p>GNUMake falls short on most of these.
 In practice, I have learned that the first three requirements are the most important to me.
-To actually use the build system for all reports and plots it has to be fast and easy enough that I actually bother to define everything.
-GNUMake makes this effortless, I have general rules set up that I hardly ever have to change that along with my file conventions automatically generate the outputs from the inputs.
-GNUMake also has cached execution, but only by file date. This is just barely good enough for me.
-GNUMake also can do a limited version of parallel execution which isn’t good enough for projects that have processes that require the GPU, there may be options to address this with tools like taskspooler, however, I have doubts about how easy it would be to export dependencies defined in the make file to cluster managers.
-GNUMake can’t do dynamic pipelines, this one sucks.</p>
-<p>I am always looking at other options, right now the main contender is DVC.
-DVC has hashed caching, it has hashed external data sources, it looks great, where it currently falls short is with parallel and cluster execution.
-However it seems like DVC is working on this and I imagine that I will eventually make the switch.</p>
-<p>Another really interesting option is <a href="https://github.com/PapenfussLab/bionix">BioNix</a>, unfortunatly it looks like it is currently unmaintained.
+To actually use the build system for all reports and plots it has to be fast and easy enough that it is practical to use.
+With GNUMake this is effortless; I have general rules set up which I hardly ever have to change that along with my file conventions automatically generate all artifacts from the data.
+GNUMake also has cached execution, but only by file date. This limited feature is just barely good enough for me.
+GNUMake can also do a limited version of parallel execution.
+However, the limited execution capabilities aren’t good enough for projects that have processes that require the GPU.
+There may be options to address this limitation with tools like taskspooler; however, I have doubts about how easy it would be to export dependencies defined in GNUMake to task queue managers.
+GNUMake can’t do dynamic pipelines, which sucks.</p>
+<p>I am always looking at other options.
+Right now, the main contender is DVC.
+DVC has hashed caching, it has hashed external data sources.
+Overall, it looks great.
+It currently falls short of parallel and cluster execution.
+The good news is that DVC seems to be working on this and I imagine that I will eventually make the switch.</p>
+<p>Another really interesting option is <a href="https://github.com/PapenfussLab/bionix">BioNix</a>.
+Unfortunately, it looks like BioNix is currently unmaintained.
 If you want to dive further into build systems, check out <a href="https://www.microsoft.com/en-us/research/uploads/prod/2018/03/build-systems.pdf">Build Systems à la Carte</a> or <a href="https://signalsandthreads.com/build-systems/">this episode</a> of Signals &amp; Threads.</p>
 <h1 id="conclusion">Conclusion</h1>
-<p>So there we have it, this is how I organize my data science projects.
-They of course don’t all look exactly like this.
-My thesis for example doesn’t have the experiment branch structure and different teams do things differently, however, this has worked fairly well for me.
-It is a wonderful experience to have your entire project history organized as a series of well-defined experiments that you can quickly reference and reproduce.
-It is also a wonderful system to onboard newcomers into as they can go back and explore the history of the project, seeing where assumptions come from and where things may have been missed.</p>
+<p>So, there you have it, this is how I organize my data science projects.
+Of course, they don’t all look exactly like this.
+For example, my thesis doesn’t have the experiment branch structure.
+It is a relief to have your entire project history organized as a series of well-defined experiments that you can quickly reference and reproduce.
+It is also a helpful system to onboard newcomers into as they can go back and explore the history of the project, see where assumptions come from, and identify areas of improvement.</p>
     </section>
 </article>
 
