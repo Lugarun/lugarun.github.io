@@ -2,7 +2,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
-
+import           Text.Pandoc.Definition
+import           Control.Monad ((>=>))
+import           Text.Pandoc.Options (HTMLMathMethod(..), writerHTMLMathMethod)
+import           Text.Pandoc.Walk (walk, walkM)
+import           Data.ByteString.Lazy.Char8 (pack, unpack)
+import qualified Network.URI.Encode as URI (encode)
+import qualified Data.Text as Text
 
 --------------------------------------------------------------------------------
 config :: Configuration
@@ -22,6 +28,19 @@ feedConfiguration = FeedConfiguration
 feedCtx :: Context String
 feedCtx = postCtx <> bodyField "description"
 
+
+tikzFilter :: Block -> Compiler Block
+tikzFilter (CodeBlock (id, "tikzpicture":extraClasses, namevals) contents) =
+  (imageBlock . ("data:image/svg+xml;utf8," ++) . URI.encode . filter (/= '\n') . itemBody <$>) $
+    makeItem (Text.unpack contents)
+     >>= loadAndApplyTemplate (fromFilePath "templates/tikz.tex") (bodyField "body")
+     >>= withItemBody (return . pack
+                       >=> unixFilterLBS "rubber-pipe" ["--pdf"]
+                       >=> unixFilterLBS "pdftocairo" ["-svg", "-", "-"]
+                       >=> return . unpack)
+  where imageBlock fname = Para [Image (id, "tikzpicture":extraClasses, namevals) [] (Text.pack fname, "")]
+tikzFilter x = return x
+
 main :: IO ()
 main = hakyllWith config  $ do
     match ("images/*" ) $ do
@@ -39,9 +58,12 @@ main = hakyllWith config  $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
+    let pandocOptions = defaultHakyllWriterOptions {
+        writerHTMLMathMethod = MathJax ""
+    }
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ (pandocCompilerWithTransformM defaultHakyllReaderOptions pandocOptions $ walkM tikzFilter)
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" postCtx

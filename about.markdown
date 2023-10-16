@@ -2,6 +2,10 @@
 title: About
 ---
 
+<div style="float: right; padding-left: 1em; padding-bottom: 1em; ">
+  <img style="border-radius: 50%; max-width: 10em; height: 10em; object-fit: cover;" src="/images/lfschmidt.jpg" alt="It's me!"/>
+</div>
+
 Hello all, welcome to the blog of the ferocious nerd Lukas!
 I dissolve into topics like:
 
@@ -12,8 +16,9 @@ I dissolve into topics like:
 - Type systems, I want nothing more than a fast compiler for a dependently typed language that **I** understand
 - Text, emacs and org-mode play a tug-of-war with Kakoune, markdown, and posix for my heart
 - Reproducible research, at first this meant big org-mode files to me, now this means [NixOs](https://nixos.org/) environments with make files that generate final results from hashed data along with extensive use of git's features
-- Language design, specifically that of [Unison](https://www.unison-lang.org/), [Idris2](https://github.com/idris-lang/Idris2), Haskell, and [ATS](https://www.cs.bu.edu/~hwxi/atslangweb/)
+- Language design, specifically that of [Unison](https://www.unison-lang.org/), [Idris2](https://github.com/idris-lang/Idris2), Haskell, [Uiua](https://www.uiua.org/), and [ATS](https://www.cs.bu.edu/~hwxi/atslangweb/)
 - Yeast, I like my yeast in sour dough, apple cider, juices, and as a nutritional topping
+
 
 You can find some stuff on my [Github page](https://github.com/lugarun).
 

@@ -13,18 +13,28 @@
         <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
         <link rel="manifest" href="./images/site.webmanifest">    </head>
+
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+  	<link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+	<script src="https://tikzjax.com/v1/tikzjax.js"></script>
     <body>
-        <header>
-          <nav>
-            <a href="./"> Posts </a>
-            <a href="./about.html">About</a>
-          </nav>
-        </header>
-        <main role="main">
-            <h1>About</h1>
-            <article>
+        <div id="page-container">
+          <div id="content-wrap">
+            <header>
+              <nav>
+                <a href="./"> Posts </a>
+                <a href="./about.html">About</a>
+              </nav>
+            </header>
+            <main role="main">
+                <h1>About</h1>
+                <article>
     <section>
-        <p>Hello all, welcome to the blog of the ferocious nerd Lukas!
+        <div style="float: right; padding-left: 1em; padding-bottom: 1em; ">
+<p><img style="border-radius: 50%; max-width: 10em; height: 10em; object-fit: cover;" src="./images/lfschmidt.jpg" alt="It's me!" /></p>
+</div>
+<p>Hello all, welcome to the blog of the ferocious nerd Lukas!
 I dissolve into topics like:</p>
 <ul>
 <li>Bayesian Statistics, my <a href="https://uwspace.uwaterloo.ca/handle/10012/19421">thesis</a> was on a Bayesian approach to novelty detection in high dimensional spaces</li>
@@ -34,7 +44,7 @@ I dissolve into topics like:</p>
 <li>Type systems, I want nothing more than a fast compiler for a dependently typed language that <strong>I</strong> understand</li>
 <li>Text, emacs and org-mode play a tug-of-war with Kakoune, markdown, and posix for my heart</li>
 <li>Reproducible research, at first this meant big org-mode files to me, now this means <a href="https://nixos.org/">NixOs</a> environments with make files that generate final results from hashed data along with extensive use of git’s features</li>
-<li>Language design, specifically that of <a href="https://www.unison-lang.org/">Unison</a>, <a href="https://github.com/idris-lang/Idris2">Idris2</a>, Haskell, and <a href="https://www.cs.bu.edu/~hwxi/atslangweb/">ATS</a></li>
+<li>Language design, specifically that of <a href="https://www.unison-lang.org/">Unison</a>, <a href="https://github.com/idris-lang/Idris2">Idris2</a>, Haskell, <a href="https://www.uiua.org/">Uiua</a>, and <a href="https://www.cs.bu.edu/~hwxi/atslangweb/">ATS</a></li>
 <li>Yeast, I like my yeast in sour dough, apple cider, juices, and as a nutritional topping</li>
 </ul>
 <p>You can find some stuff on my <a href="https://github.com/lugarun">Github page</a>.</p>
@@ -42,6 +52,15 @@ I dissolve into topics like:</p>
     </section>
 </article>
 
-        </main>
+            </main>
+          </div>
+          <footer>
+            <ul class="footer">
+              <li>By: Lukas Schmidt</li>
+              <li>Located in Toronto, Ontario</li>
+              <li>Build with Hakyll</li>
+            </ul>
+          </footer>
+        </div>
     </body>
 </html>

@@ -1,25 +1,44 @@
 :root {
-  --base00: #000000;
-  --base08: #4D4D4D;
-  --base01: #FF5555;
-  --base09: #FF6E67;
-  --base02: #50FA7B;
-  --base0A: #5AF78E;
-  --base03: #F1FA8C;
-  --base0B: #F4F99D;
-  --base04: #BD93F9;
-  --base0C: #CAA9FA;
-  --base05: #FF79C6;
-  --base0D: #FF92D0;
-  --base06: #8BE9FD;
-  --base0E: #9AEDFE;
-  --base07: #BFBFBF;
-  --base0F: #E6E6E6;
-  --fg: #F8F8F2;
-  --bg: #282A36;
-  --highlight-fg: var(--base0D);
-  --title-fg: var(--base0A);
-  --title-two-fg: var(--base09);
+
+  /* black */
+  --base00: #1E2326;
+  --base08: #272E33;
+
+  /* red */
+  --base01: #E67E80;
+  --base09: #E67E80;
+
+  /* green */
+  --base02: #A7C080;
+  --base0A: #83C092;
+
+  /* yellow */
+  --base03: #DBBC7F;
+  --base0B: #DBBC7F;
+
+  /* blue */
+  --base04: #7FBBB3;
+  --base0C: #7FBBB3;
+
+  /* magenta */
+  --base05: #D699B6;
+  --base0D: #D699B6;
+
+  /* cyan */
+  --base06: #83C092;
+  --base0E: #83C092;
+
+  /* white */
+  --base07: #D3C6AA;
+  --base0F: #F2EFDF;
+
+  /* special */
+  --fg: var(--base07);
+  --bg: var(--base00);
+  --cursorColor: var(base0F);
+  --highlight-fg: var(--base04);
+  --title-fg: var(--base02);
+  --title-two-fg: var(--base03);
   --fade-fg: var(--base06);
   --highlight-bg: var(--base08);
   --light-bg: var(--base01);
@@ -27,16 +46,29 @@
 
 html {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,'Helvetica', 'Arial', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   color: var(--fg);
   background: var(--bg);
   background-attachment: fixed;
 }
 
 body {
-  max-width: 800px;
-  margin: 20px auto;
   line-height: 1.4;
+}
+
+main {
+  padding-top: 3px;
+  width: 800px;
+  margin: 4em auto;
+}
+
+#page-container {
+  position: relative;
+  min-height: 98vh;
+}
+
+#content-wrap {
+  padding-bottom:9rem;
 }
 
 h1 {
@@ -62,8 +94,7 @@ a:hover {
 a:hover,
 a:visited:hover,
 a:hover:hover {
-  color: #eb0978;
-  text-decoration: underline;
+  color: var(--base0F);
 }
 
 figure {
@@ -82,11 +113,22 @@ figcaption {
 }
 
 header {
-  padding: 0% 10%;
+  padding-top: 1em;
+  width: 97%;
+  display: block;
+}
+
+footer {
+  width: 100%;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 2.5rem;
+  font-size: 1em;
 }
 
 nav {
-  font-size: 1.2em;
+  font-size: 1em;
   float: right;
 }
 
@@ -108,4 +150,42 @@ p {
   /* line-height: 1.6em;
   letter-spacing: 0.02em;
   margin: 1em 0 0 0; */
+}
+
+
+.tikzpicture {
+  height: 200px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+ul.postlist {
+  list-style-type: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+ul.postlist > li {
+  margin: 1em 0;
+}
+
+div.postlist {
+  margin: 0;
+}
+
+div.date {
+  font-size: 0.5em;
+  font-weight: normal;
+}
+
+ul.footer {
+  list-style-type: none;
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin: auto;
+}
+ul.footer > li{
+  margine-right: 100px;
 }

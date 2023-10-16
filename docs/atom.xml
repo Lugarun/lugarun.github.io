@@ -6,7 +6,7 @@
     <id>https://lugarun.github.io/atom.xml</id>
     <author>
         <name>Lukas Schmidt</name>
-        
+        <email></email>
     </author>
     <updated>2023-10-09T00:00:00Z</updated>
     <entry>
@@ -17,7 +17,7 @@
     <updated>2023-10-09T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <section class="header">
-        Posted on October  9, 2023
+        <div class="date">Posted on October  9, 2023</div>
         
     </section>
     <section>
@@ -160,7 +160,7 @@ It is also a helpful system to onboard newcomers into as they can go back and ex
     <updated>2023-03-21T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <section class="header">
-        Posted on March 21, 2023
+        <div class="date">Posted on March 21, 2023</div>
         
     </section>
     <section>
@@ -206,7 +206,7 @@ The next big ZMK steps for me are to fix a Bluetooth connection bug and to work 
     <updated>2022-07-31T00:00:00Z</updated>
     <summary type="html"><![CDATA[<article>
     <section class="header">
-        Posted on July 31, 2022
+        <div class="date">Posted on July 31, 2022</div>
         
     </section>
     <section>
