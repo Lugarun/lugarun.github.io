@@ -1,14 +1,15 @@
---------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
-import           Hakyll
 import           Text.Pandoc.Definition
 import           Control.Monad ((>=>))
 import           Text.Pandoc.Options (HTMLMathMethod(..), writerHTMLMathMethod)
 import           Text.Pandoc.Walk (walk, walkM)
 import           Data.ByteString.Lazy.Char8 (pack, unpack)
+import qualified Text.Pandoc.Filter.Plot as PP
 import qualified Network.URI.Encode as URI (encode)
 import qualified Data.Text as Text
+import           Hakyll
 
 --------------------------------------------------------------------------------
 config :: Configuration
@@ -41,10 +42,20 @@ tikzFilter (CodeBlock (id, "tikzpicture":extraClasses, namevals) contents) =
   where imageBlock fname = Para [Image (id, "tikzpicture":extraClasses, namevals) [] (Text.pack fname, "")]
 tikzFilter x = return x
 
+plotFilter' :: Pandoc -> IO Pandoc
+plotFilter' = 
+  PP.plotFilter (PP.defaultConfiguration
+  { PP.defaultDirectory = "plots"
+  }) (Just $ Format "html5")
+
 main :: IO ()
 main = hakyllWith config  $ do
     match ("images/*" ) $ do
         route   idRoute
+        compile copyFileCompiler
+
+    match ("plots/*" ) $ do
+        route   $ customRoute (("posts/" <>) . toFilePath)
         compile copyFileCompiler
 
     match "css/*" $ do
@@ -63,12 +74,11 @@ main = hakyllWith config  $ do
     }
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ (pandocCompilerWithTransformM defaultHakyllReaderOptions pandocOptions $ walkM tikzFilter)
+        compile $ (pandocCompilerWithTransformM defaultHakyllReaderOptions pandocOptions ((unsafeCompiler . plotFilter') >=> (walkM tikzFilter)) )
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
-
 
     match "index.html" $ do
         route idRoute

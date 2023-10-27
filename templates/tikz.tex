@@ -2,12 +2,17 @@
 \usepackage[pdftex,active,tightpage]{preview}
 \usepackage{amsmath}
 \usepackage{tikz}
+\usepackage{pgfplots}
 \usetikzlibrary{matrix}
 \usepackage{xcolor}
-\definecolor{fg}{HTML}{839496}
+\definecolor{fg}{HTML}{827766}
 
 \begin{document}
 \color{fg}
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+
 \begin{preview}
   \begin{tikzpicture}[auto]
     $body$

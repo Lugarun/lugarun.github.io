@@ -14,9 +14,23 @@
             rubber
             texlive.combined.scheme-full
             poppler_utils
+            gnuplot
           ];
         }) {
-        packages = { inherit (nixpkgs.legacyPackages.${system}) rubber poppler_utils; texlive = nixpkgs.legacyPackages.${system}.texlive.combined.scheme-full; };
+          packages = { inherit (nixpkgs.legacyPackages.${system}) gnuplot rubber poppler_utils; texlive = nixpkgs.legacyPackages.${system}.texlive.combined.scheme-full; };
+          devShells.default = nixpkgs.legacyPackages.${system}.mkShell {
+            buildInputs = with nixpkgs.legacyPackages.${system}; [
+              rubber
+              texlive.combined.scheme-full
+              poppler_utils
+              gnuplot
+              marksman
+              (python3.withPackages (ps: with ps; [
+                pandas
+                matplotlib
+                ]))
+            ];
+          };
         }
     );
 }

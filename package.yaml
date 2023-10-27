@@ -15,6 +15,7 @@ dependencies:
     - uri-encode
     - text
     - time-locale-compat
+    - pandoc-plot
 
 executable:
     main: site.hs
