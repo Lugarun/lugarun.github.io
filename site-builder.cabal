@@ -1,0 +1,29 @@
+cabal-version:      3.0
+name:               site-builder
+
+version:            0.1.0.0
+build-type:         Simple
+
+executable site-builder
+  main-is:          site-builder.hs
+  build-depends:    base
+                  , text
+                  , bytestring
+                  , uri-encode
+                  , hakyll
+                  , hakyll-sass
+                  , pandoc
+                  , pandoc-types
+                  , pandoc-plot
+                  , panpipe
+                  , panhandle
+    -- - filepath
+    -- - containers
+    -- - time
+    -- - process
+    -- - time-locale-compat
+
+  default-language: Haskell2010
+
+common warnings
+    ghc-options: -Wall

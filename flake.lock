@@ -18,40 +18,7 @@
         "type": "github"
       }
     },
-    "hakyll-flakes": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1690201526,
-        "narHash": "sha256-9Vaix5tqLTAEmDnPF3BzkFP4aQkujvrpt/7K8/i7FbM=",
-        "owner": "Radvendii",
-        "repo": "hakyll-flakes",
-        "rev": "59fe9229b71cbe3d9460596912617b6784800159",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Radvendii",
-        "repo": "hakyll-flakes",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1689503327,
-        "narHash": "sha256-qVwzYLA8oT2oWNDXO0A3bZHOhoPOihIB9T677+Hor1E=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "f64b9738da8e86195766147e9752c67fccee006c",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-23.05",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1697493557,
         "narHash": "sha256-oPpn4qaP0M1c4PfTJLMY/gmImnFKUjRg6kXDn8C8PXo=",
@@ -66,11 +33,44 @@
         "type": "github"
       }
     },
+    "panhandle": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1698436981,
+        "narHash": "sha256-qJM0BcYvf+EgUh0LOfHP45N0YULB5/5GCkHfbIizKI4=",
+        "owner": "Lugarun",
+        "repo": "panhandle",
+        "rev": "c489acf1f4e275dd376967c9c28b9337679922a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lugarun",
+        "repo": "panhandle",
+        "type": "github"
+      }
+    },
+    "panpipe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1698436341,
+        "narHash": "sha256-GZpjTXloP3Ir62rAAMGt1TO1ATI9sR9REUdcaz/vcoU=",
+        "owner": "Lugarun",
+        "repo": "panpipe",
+        "rev": "8132f71203880f583fa4779ad0703ba653c41767",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lugarun",
+        "repo": "panpipe",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "hakyll-flakes": "hakyll-flakes",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs",
+        "panhandle": "panhandle",
+        "panpipe": "panpipe"
       }
     },
     "systems": {

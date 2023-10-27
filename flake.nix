@@ -1,34 +1,47 @@
 {
-  inputs.nixpkgs.url = "github:nixos/nixpkgs";
-  inputs.hakyll-flakes.url = "github:Radvendii/hakyll-flakes";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+    panpipe = {
+      url = "github:Lugarun/panpipe";
+      flake = false;
+    };
+    panhandle = {
+      url = "github:Lugarun/panhandle";
+      flake = false;
+    };
+  };
 
-  outputs = { self, hakyll-flakes, flake-utils, nixpkgs }:
+  outputs = { self, nixpkgs, flake-utils, panpipe, panhandle}:
     flake-utils.lib.eachDefaultSystem (
-      system: nixpkgs.lib.recursiveUpdate (
-        hakyll-flakes.lib.mkAllOutputs {
-          inherit system;
-          name = "lugarun";
-          src = ./.;
-          websiteBuildInputs = with nixpkgs.legacyPackages.${system}; [
-            rubber
-            texlive.combined.scheme-full
-            poppler_utils
-            gnuplot
-          ];
-        }) {
-          packages = { inherit (nixpkgs.legacyPackages.${system}) gnuplot rubber poppler_utils; texlive = nixpkgs.legacyPackages.${system}.texlive.combined.scheme-full; };
-          devShells.default = nixpkgs.legacyPackages.${system}.mkShell {
-            buildInputs = with nixpkgs.legacyPackages.${system}; [
-              rubber
-              texlive.combined.scheme-full
-              poppler_utils
-              gnuplot
-              marksman
-              (python3.withPackages (ps: with ps; [
+      system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in {
+          packages.site-builder = pkgs.haskellPackages.developPackage {
+            root = ./.;
+            source-overrides = {
+              panpipe = panpipe;
+              panhandle = panhandle;
+            };
+            modifier = drv:
+              pkgs.haskell.lib.addBuildTools drv (with pkgs.haskellPackages;
+              [ cabal-install
+                ghcid
+                pkgs.zlib
+              ]);
+          };
+          devShells.default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.marksman
+              pkgs.rubber
+              pkgs.texlive.combined.scheme-full
+              pkgs.poppler_utils
+              pkgs.gnuplot
+              (pkgs.python3.withPackages (ps: with ps; [
                 pandas
                 matplotlib
-                ]))
+              ]))
             ];
           };
         }

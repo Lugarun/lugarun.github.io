@@ -1,15 +1,17 @@
 ------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
-import           Text.Pandoc.Definition
 import           Control.Monad ((>=>))
+import           Data.Monoid (mappend)
+import           Data.ByteString.Lazy.Char8 (pack, unpack)
+import           Hakyll
+import           Text.Pandoc.Definition
 import           Text.Pandoc.Options (HTMLMathMethod(..), writerHTMLMathMethod)
 import           Text.Pandoc.Walk (walk, walkM)
-import           Data.ByteString.Lazy.Char8 (pack, unpack)
-import qualified Text.Pandoc.Filter.Plot as PP
-import qualified Network.URI.Encode as URI (encode)
 import qualified Data.Text as Text
-import           Hakyll
+import qualified Network.URI.Encode as URI (encode)
+import qualified Text.Pandoc.Filter.Plot as PP
+import qualified PanPipe as PanPipe
+import qualified PanHandle as PanHandle
 
 --------------------------------------------------------------------------------
 config :: Configuration
@@ -74,7 +76,7 @@ main = hakyllWith config  $ do
     }
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ (pandocCompilerWithTransformM defaultHakyllReaderOptions pandocOptions ((unsafeCompiler . plotFilter') >=> (walkM tikzFilter)) )
+        compile $ (pandocCompilerWithTransformM defaultHakyllReaderOptions pandocOptions ((unsafeCompiler . plotFilter') >=> (walkM tikzFilter) >=> (unsafeCompiler . PanPipe.transformDoc) >=> (return . PanHandle.transform)))
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" postCtx
