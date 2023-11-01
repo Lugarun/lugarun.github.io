@@ -169,6 +169,19 @@ ul.postlist > li {
   margin: 1em 0;
 }
 
+table {
+  border-collapse: collapse;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid var(--fg);
+  text-align: center;
+  vertical-align: middle;
+}
+
+th, td {
+  padding: 0.5em;
+}
+
 div.postlist {
   margin: 0;
 }

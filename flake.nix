@@ -41,6 +41,7 @@
               (pkgs.python3.withPackages (ps: with ps; [
                 pandas
                 matplotlib
+                tabulate
               ]))
             ];
           };
