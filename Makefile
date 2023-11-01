@@ -1,8 +1,8 @@
 watch:
-	nix run . -- watch
+	nix run .#site-builder -- watch
 
 clean:
-	nix run . -- clean
+	nix run .#site-builder -- clean
 
 build:
-	nix run . -- build
+	nix run .#site-builder -- build
